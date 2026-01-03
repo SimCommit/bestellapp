@@ -5,6 +5,25 @@ let sumTemp = 0;
 function init() {
   renderLaCarta();
   cartButtonPrice();
+  getCookie();
+}
+
+// reading csrftoken form cookies
+function getCookie(name) {
+  let cookieValue = null;
+
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+      }
+    }
+  }
+
+  return cookieValue;
 }
 
 function renderLaCarta() {
