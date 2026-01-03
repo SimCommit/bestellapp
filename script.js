@@ -2,13 +2,19 @@ let cart = [];
 let amountOfArr = 3;
 let sumTemp = 0;
 
+// #region Admin Overlay Properties
+let overlay;
+let form;
+// #endregion
+
 function init() {
   renderLaCarta();
   cartButtonPrice();
-  getCookie();
+  onLoad();
+  // getCookie();
 }
 
-// reading csrftoken form cookies
+// #region Reading csrftoken form cookies
 function getCookie(name) {
   let cookieValue = null;
 
@@ -25,6 +31,74 @@ function getCookie(name) {
 
   return cookieValue;
 }
+// #endregion
+
+// #region Admin Overlay Functions
+function onLoad() {
+  overlay = document.getElementById("overlay");
+  form = document.getElementById("mealForm");
+}
+
+function openOverlay() {
+  overlay.classList.remove("hidden");
+}
+
+function closeOverlay() {
+  overlay.classList.add("hidden");
+  form.reset();
+}
+
+function onOverlayClick(event) {
+  if (event.target === overlay) {
+    closeOverlay();
+  }
+}
+
+function onFormSubmit(event) {
+  event.preventDefault();
+
+  const formData = new FormData(form);
+
+  const meal = {
+    name: formData.get("name"),
+    description: formData.get("description"),
+    price: Number(formData.get("price")),
+    amount: Number(formData.get("amount")),
+  };
+
+  console.log("Meal payload:", meal);
+
+  addMeal(meal);
+
+  closeOverlay();
+}
+// #endregion
+
+// #region CRUD
+function addMeal(meal) {
+  const csrfToken = getCookie("csrftoken");
+
+  const dataToSend = {
+    name: meal.name,
+    description: meal.description,
+    price: meal.price,
+    amount: meal.amount,
+  };
+
+  fetch("http://localhost:8000/meals/", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrfToken,
+    },
+    body: JSON.stringify(dataToSend),
+  }).then((response) => {
+    window.location.reload();
+  });
+}
+
+// #endregion
 
 function renderLaCarta() {
   let laCartaRef = document.getElementById("la-carta");

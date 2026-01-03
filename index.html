@@ -22,7 +22,7 @@
     <header>
         <div class="header-container maximal-width">
             <img src="./assets/img/Logo.png" alt="logo">
-            <div class="burger">
+            <div onclick="openOverlay()" class="burger">
                 <div class="layer"></div>
                 <div class="layer"></div>
                 <div class="layer"></div>
@@ -58,12 +58,15 @@
         <div id="main-column-right-id" class="main-column-right">
             <section id="cart-warpper-id" class="cart-wrapper">
                 <div class="cart-header">
-                    <button id="close-cart-btn" class="general-margin-width" onclick="closeCart()">Warenkorb schließen<img class="cart-bag-icon" src="./assets/icons/cart-bag-icon.png" alt="bag icon"></button>
+                    <button id="close-cart-btn" class="general-margin-width" onclick="closeCart()">Warenkorb
+                        schließen<img class="cart-bag-icon" src="./assets/icons/cart-bag-icon.png"
+                            alt="bag icon"></button>
                     <h2>Warenkorb</h2>
                 </div>
                 <div id="cart" class="cart-container">
                     <p class="cart-empty-filler-text">Keine Gerichte ausgewählt</p>
-                    <img class="cart-empty-filler" src="./assets/img/bag-ground.png" alt="Einkaufstasche im Hintergrund">
+                    <img class="cart-empty-filler" src="./assets/img/bag-ground.png"
+                        alt="Einkaufstasche im Hintergrund">
                 </div>
                 <div id="cart-bill"></div>
             </section>
@@ -78,11 +81,47 @@
     </footer>
 
     <button id="cart-btn" onclick="openCart()"></span></button>
- 
+
     <div id="order-overlay-id" class="order-overlay d-none">
         <div class="order-container">
             <h2>Testbestellung wurde durchgeführt</h2>
             <button onclick="closeOrderOverlay()">OK</button>
+        </div>
+    </div>
+
+    <!-- Admin Overlay -->
+    <div id="overlay" class="overlay hidden" onclick="onOverlayClick(event)">
+        <div class="dialog">
+            <h2>Admin Overlay</h2>
+
+            <h3>New Meal</h3>
+
+            <form id="mealForm" onsubmit="onFormSubmit(event)">
+                <label>
+                    Name
+                    <input type="text" name="name" required />
+                </label>
+
+                <label>
+                    Description
+                    <input type="text" name="description" required />
+                </label>
+
+                <label>
+                    Price
+                    <input type="number" name="price" step="0.1" required />
+                </label>
+
+                <label>
+                    Amount
+                    <input type="number" name="amount" required />
+                </label>
+
+                <div class="actions">
+                    <button type="button" onclick="closeOverlay()">Cancel</button>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
