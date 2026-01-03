@@ -11,7 +11,18 @@ function init() {
   renderLaCarta();
   cartButtonPrice();
   onLoad();
-  // getCookie();
+  setToken();
+}
+
+function setToken() {
+  // Füge hier einen GET-Request an dein Backend hinzu, BEVOR du POSTest.
+  // Dies stellt sicher, dass Django den "csrftoken" Cookie im Browser setzt.
+  fetch("http://localhost:8000/meals/", { credentials: "include" })
+       .then(response => {
+            // Nur zur Überprüfung, ob der Cookie jetzt da ist:
+            console.log("Initial GET request to set cookie");
+       })
+       .catch(error => console.error("Initial GET request failed:", error));
 }
 
 // #region Reading csrftoken form cookies
